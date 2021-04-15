@@ -4,6 +4,8 @@ const token = require("./token.json");//read token
 const config = require("./config.json");//read config
 const axios = require("axios").default;//activate axios
 
+//Functions
+
 //api call for player count
 function playercount() {
   axios.request({method: 'POST',url: 'https://6178d.playfabapi.com/Client/LoginWithCustomID',headers: {'Content-Type': 'application/json'},data: {CustomId: 'CardsTankardsDiscordBot', TitleId: '6178D'}}).then(function (response) {
