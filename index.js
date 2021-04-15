@@ -45,10 +45,11 @@ client.on('ready', () => {
 client.ws.on('INTERACTION_CREATE', async interaction => {
   const command = interaction.data.name.toLowerCase();
   const args = interaction.data.options;
-  if (command === 'ping'){
+  switch (command) {
+    case 'ping':
     callback(interaction, 4, "PONG!!!");
-  }
-  if (command === 'lfg'){
+    break;
+    case 'lfg':
     client.guilds.fetch(interaction.guild_id)
     .then(function (response) {
       var guild = response;
@@ -66,13 +67,18 @@ client.ws.on('INTERACTION_CREATE', async interaction => {
         callback(interaction, 4, say)
       })
     })
+    break;
   }
-  if (command === 'restart' && interaction.member.user.id == config.owner){
-    callback(interaction, 4, "brb...").then(() => process.exit(0));
-  }
-  if (command === 'update' && interaction.member.user.id == config.owner){
-    const log = await git().pull();
-    callback(interaction, 4, "```json\n" + JSON.stringify(log, null, '\t') + "```");
+  if (interaction.member.user.id == config.owner) {
+    switch (command) {
+      case 'restart':
+      callback(interaction, 4, "brb...").then(() => process.exit(0));
+      break;
+      case 'update':
+      const log = await git().pull();
+      callback(interaction, 4, "```json\n" + JSON.stringify(log, null, '\t') + "```");
+      break;
+    }
   }
 });
 
