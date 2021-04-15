@@ -1,5 +1,5 @@
 {
-  "name": "cards-and-tankards",
+  "name": "cards-and-tankards-bot",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -18,7 +18,7 @@
   "homepage": "https://github.com/Notarin/Cards-and-Tankards#readme",
   "dependencies": {
     "axios": "^0.21.1",
-    "discord.js": "^12.5.1",
+    "discord.js": "^12.5.3",
     "simple-git": "^2.31.0"
   }
 }
