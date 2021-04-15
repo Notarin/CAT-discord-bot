@@ -75,6 +75,12 @@ client.ws.on('INTERACTION_CREATE', async interaction => {
   if (command === 'restart' && interaction.member.user.id == config.owner){
     callback(interaction, 4, "brb...").then(() => process.exit(0));
   }
+  if (command === 'update'){
+    if (interaction.member.user.id == config.owner) {
+      const log = await git().pull();
+      callback(interaction, 4, "```json\n" + JSON.stringify(log, null, '\t') + "```");
+    }
+  }
 });
 
 //use bot token to login
