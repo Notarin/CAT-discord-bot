@@ -7,14 +7,9 @@ const git = require('simple-git');
 
 //Functions
 async function callback(interaction, type, content) {
-  await client.api.interactions(interaction.id, interaction.token).callback.post({
-    data: {
-      type: type,
-      data: {
-        content: content
-      }
-    }
-  });
+  await client.api.interactions(interaction.id, interaction.token).callback.post(
+    {data: {type: type, data: {content: content}}}
+  );
 }
 
 //api call for player count
