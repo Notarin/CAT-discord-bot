@@ -6,6 +6,16 @@ const axios = require("axios").default;//activate axios
 const git = require('simple-git');
 
 //Functions
+async function callback(interaction, type, content) {
+  await client.api.interactions(interaction.id, interaction.token).callback.post({
+    data: {
+      type: type,
+      data: {
+        content: content
+      }
+    }
+  });
+}
 
 //api call for player count
 function playercount() {
@@ -13,17 +23,18 @@ function playercount() {
     var ticket = response.data.data.SessionTicket;
     axios.request({method: 'POST',url: 'https://6178d.playfabapi.com/Client/ExecuteCloudScript',headers: {'Content-Type': 'application/json','X-Authorization': ticket},data: {FunctionName: 'getPlayerCountOnline'}}).then(function (response) {
       var count = response.data.data.FunctionResult;
-      switch (count) {
+      switch (response.data.data.FunctionResult) {
         case 0:
-        client.user.setPresence({ activity: { name: count.toString() + " players in the tavern", type: 'WATCHING' }, status: 'online'});
+        var right = " players in the tavern"
         break;
         case 1:
-        client.user.setPresence({ activity: { name: count.toString() + " player in the tavern", type: 'WATCHING' }, status: 'online'});
+        var right = " player in the tavern"
         break;
         default:
-        client.user.setPresence({ activity: { name: count.toString() + " players in the tavern", type: 'WATCHING' }, status: 'online'});
+        var right = " players in the tavern"
         break;
       }
+      client.user.setPresence({ activity: { name: response.data.data.FunctionResult.toString() + right, type: 'WATCHING' }, status: 'online'});
     }).catch(function (error) {console.error(error);});
   }).catch(function (error) {console.error(error);});
 }
@@ -31,6 +42,7 @@ function playercount() {
 //when the bot is online
 client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`);
+  playercount();
   setInterval(playercount, 60000);
 });
 
@@ -39,9 +51,7 @@ client.ws.on('INTERACTION_CREATE', async interaction => {
   const command = interaction.data.name.toLowerCase();
   const args = interaction.data.options;
   if (command === 'ping'){
-    client.api.interactions(interaction.id, interaction.token).callback.post({
-      data: {type: 4, data: {content: "PONG!!!"}}
-    })
+    callback(interaction, 4, "PONG!!!");
   }
   if (command === 'lfg'){
     client.guilds.fetch(interaction.guild_id)
@@ -52,53 +62,18 @@ client.ws.on('INTERACTION_CREATE', async interaction => {
         var user = response
         if (interaction.member.roles.includes(config.lfgrole)) {
           user.roles.remove(config.lfgrole, "user ran lfg command")
-          client.api.interactions(interaction.id, interaction.token).callback.post({
-            data: {
-              type: 4,
-              data: {
-                content: "You\'re no longer looking for a group!"
-              }
-            }
-          })
+          var say = "You\'re no longer looking for a group!"
         }
         if (!interaction.member.roles.includes(config.lfgrole)) {
           user.roles.add(config.lfgrole, "user ran lfg command")
-          client.api.interactions(interaction.id, interaction.token).callback.post({
-            data: {
-              type: 4,
-              data: {
-                content: "You\'re now looking for a group!"
-              }
-            }
-          })
+          var say = "You\'re now looking for a group!"
         }
+        callback(interaction, 4, say)
       })
     })
   }
-  if (command === 'restart'){
-    if (interaction.member.user.id == config.owner) {
-      client.api.interactions(interaction.id, interaction.token).callback.post({
-        data: {
-          type: 4,
-          data: {
-            content: "brb..."
-          }
-        }
-      })
-      .then(function(result) {
-        process.exit(0);
-      });
-    }
-    if (!interaction.member.user.id == config.owner) {
-      client.api.interactions(interaction.id, interaction.token).callback.post({
-        data: {
-          type: 4,
-          data: {
-            content: "no..."
-          }
-        }
-      })
-    }
+  if (command === 'restart' && interaction.member.user.id == config.owner){
+    callback(interaction, 4, "brb...").then(() => process.exit(0));
   }
 });
 
