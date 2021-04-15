@@ -3,6 +3,7 @@ const client = new Discord.Client();//activate discord api client
 const token = require("./token.json");//read token
 const config = require("./config.json");//read config
 const axios = require("axios").default;//activate axios
+const git = require('simple-git');
 
 //Functions
 
