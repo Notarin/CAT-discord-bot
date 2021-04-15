@@ -1,0 +1,24 @@
+{
+  "name": "cards-and-tankards",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo not test setup"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Notarin/Cards-and-Tankards.git"
+  },
+  "author": "Notarin#9772",
+  "license": "Unlicense",
+  "bugs": {
+    "url": "https://github.com/Notarin/Cards-and-Tankards/issues"
+  },
+  "homepage": "https://github.com/Notarin/Cards-and-Tankards#readme",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "discord.js": "^12.5.1",
+    "simple-git": "^2.31.0"
+  }
+}
