@@ -1,0 +1,52 @@
+  if (command === 'update'){
+    if (interaction.member.user.id == config.owner) {
+      git().pull();
+      client.api.interactions(interaction.id, interaction.token).callback.post({
+        data: {
+          type: 4,
+          data: {
+            content: "on it😎"
+          }
+        }
+      });
+    }
+  }
+  if (command === 'update'){
+    if (interaction.member.user.id == config.owner) {
+      git().pull();
+      client.api.interactions(interaction.id, interaction.token).callback.post({
+        data: {
+          type: 4,
+          data: {
+            content: "on it😎"
+          }
+        }
+      });
+    }
+  }
+  if (command === 'update'){
+    if (interaction.member.user.id == config.owner) {
+      git().pull();
+      client.api.interactions(interaction.id, interaction.token).callback.post({
+        data: {
+          type: 4,
+          data: {
+            content: "on it😎"
+          }
+        }
+      });
+    }
+  }
+  if (command === 'update'){
+    if (interaction.member.user.id == config.owner) {
+      git().pull();
+      client.api.interactions(interaction.id, interaction.token).callback.post({
+        data: {
+          type: 4,
+          data: {
+            content: "on it😎"
+          }
+        }
+      });
+    }
+  }
